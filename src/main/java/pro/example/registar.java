@@ -10,8 +10,8 @@ public class registar  {
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
-    public void AddNewStudent(student s){
-       s =new student();
+    public void AddNewStudent(String name, String contactDetails,Double gpa,ArrayList<course> courses){
+      student  s =new student(name,  contactDetails, gpa, courses);
     }
     public void AddNewGrade(student s, double gpa){
         s.setGpa(gpa);
