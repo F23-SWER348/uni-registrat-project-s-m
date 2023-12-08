@@ -1,12 +1,15 @@
 package pro.example;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public class course {
     private String courseName;
     private int numOfCredits;
     private String faculty;
-    private String prerequisites;
+    List<String> prerequisites;
+    LocalDateTime start ;
+    LocalDateTime end;
    
 
     public course(String name, int numOfCredits, String faculty ) {
@@ -15,6 +18,7 @@ public class course {
         this.faculty = faculty;
         
     }
+
     public String getCourseName() {
         return courseName;
     }
@@ -33,13 +37,32 @@ public class course {
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
-    public Optional<String> getPrerequisites() {
-        return Optional.ofNullable("Theres No prerequisites");
+    public List<String> getPrerequisites() {
+        return prerequisites;
     }
-    public void setPrerequisites(String prerequisites) {
+
+    public void setPrerequisites(List<String> prerequisites) {
         this.prerequisites = prerequisites;
     }
-
-
+    public LocalDateTime getStart(){
+        return this.start;
+    }
+     public void setStart(LocalDateTime start ){
+        this.start=start;
+    }
+     public LocalDateTime getEnd(){
+        return this.end;
+    }
+     public void setEnd(LocalDateTime end ){
+        this.end=end;
+    }
+    public boolean hasScheduleConflict(course otherCourse) {
+        LocalDateTime thisStart = this.getStart();
+        LocalDateTime thisEnd = this.getEnd();
+        LocalDateTime otherStart = otherCourse.getStart();
+        LocalDateTime otherEnd = otherCourse.getEnd();
+        // Check for overlap
+        return !(otherEnd.isBefore(thisStart) || otherStart.isAfter(thisEnd));
+    }
     
 }

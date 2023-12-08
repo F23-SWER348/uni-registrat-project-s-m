@@ -1,11 +1,13 @@
 package pro.example;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class student extends Userprofile {
  
 private Double gpa;
 ArrayList<course> courses;
+List<course> tokenCourses;
 public student(){
     super();
 }
@@ -26,4 +28,10 @@ public Double getGpa() {
 public void setGpa(Double gpa) {
     this.gpa = gpa;
 }
+public List<course> gettokenCourses(){
+    return tokenCourses;
 }
+public void settokenCourses(List<course> t){
+    this.tokenCourses=t;
+
+}}
