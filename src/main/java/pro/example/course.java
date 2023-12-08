@@ -33,7 +33,7 @@ public class course {
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
-    public Optional getPrerequisites() {
+    public Optional<String> getPrerequisites() {
         return Optional.ofNullable("Theres No prerequisites");
     }
     public void setPrerequisites(String prerequisites) {
