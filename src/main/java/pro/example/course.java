@@ -6,16 +6,18 @@ import java.util.Optional;
 public class course {
     private String courseName;
     private int numOfCredits;
-    private String faculty;
+    
     List<String> prerequisites;
     LocalDateTime start ;
     LocalDateTime end;
    
 
-    public course(String name, int numOfCredits, String faculty ) {
+    public course(String name, int numOfCredits, LocalDateTime start,LocalDateTime end ) {
+        this.end=end;
+        this.start=start;
         this.courseName = name;
         this.numOfCredits = numOfCredits;
-        this.faculty = faculty;
+        
         
     }
 
@@ -31,12 +33,7 @@ public class course {
     public void setNumOfCredits(int numOfCredits) {
         this.numOfCredits = numOfCredits;
     }
-    public String getFaculty() {
-        return faculty;
-    }
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
+    
     public List<String> getPrerequisites() {
         return prerequisites;
     }
