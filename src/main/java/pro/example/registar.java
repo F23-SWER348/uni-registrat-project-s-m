@@ -4,6 +4,7 @@ package pro.example;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class registar  {
@@ -11,15 +12,14 @@ public class registar  {
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
-    public void addNewStudent(String name, String contactDetails, Double gpa, ArrayList<course> courses) {
+    public void addNewStudent(String name, String contactDetails, Double gpa, ArrayList<course> courses, List<course> x) {
       student student = new student(name, contactDetails, gpa, courses);
-      // You might want to do something with the created student, like adding it to a list.
+      student.settokenCourses(x);
       System.out.println("New student added: " + student.getName());
   }
 
   public void addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
       faculty faculty = new faculty(name, contactDetails, courses);
-      // You might want to do something with the created faculty, like adding it to a list.
       System.out.println("New faculty added: " + faculty.getName());
   }
 
@@ -48,4 +48,29 @@ public class registar  {
             return "Probation";
         }
     }
-  }
+    public void AddNewCoursesStudent( student s, course newCourse) {
+        if (!newCourse.getPrerequisites().isEmpty()) {
+            if (s.gettokenCourses().containsAll(newCourse.getPrerequisites())) {
+                if (!hasScheduleConflict(s.getCourses(), newCourse)) {
+                    s.getCourses().add(newCourse);
+                    System.out.println("Course added to student: " + newCourse.getCourseName());
+                } else {
+                    System.out.println("Schedule conflict! The new course conflicts with existing courses.");
+                }
+            } else if(newCourse.getPrerequisites().isEmpty()) {
+                if (!hasScheduleConflict(s.getCourses(), newCourse)) {
+                    s.getCourses().add(newCourse);
+                    System.out.println("Course added to student: " + newCourse.getCourseName());
+                } else {
+                    System.out.println("Schedule conflict! The new course conflicts with existing courses.");
+                }
+            }
+        }
+    }
+
+    private boolean hasScheduleConflict(ArrayList<course> studentCourses, course newCourse) {
+        return studentCourses.stream()
+                .anyMatch(existingCourse -> existingCourse.hasScheduleConflict(newCourse));
+    }
+}
+  
