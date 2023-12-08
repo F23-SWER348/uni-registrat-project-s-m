@@ -19,17 +19,27 @@ public class registar  {
   }
 
   public void addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
-      faculty faculty = new faculty(name, contactDetails, courses);
-      System.out.println("New faculty added: " + faculty.getName());
-  }
+    faculty faculty = new faculty(name, contactDetails, courses);
+    
+    if (!hasFacultyScheduleConflict(faculty.getCourses())) {
+        // You might want to do something with the created faculty, like adding it to a list.
+        System.out.println("New faculty added: " + faculty.getName());
+    } else {
+        System.out.println("Schedule conflict! The new faculty's courses conflict with each other.");
+    }
+}
+
+private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
+    return facultyCourses.stream().anyMatch(course -> hasScheduleConflict(facultyCourses, course));
+}
 
     public void AddNewGrade(student s, double gpa){
         s.setGpa(gpa);
     }
 
-    public void AddNewCourse(String name, int numOfCredits, String faculty,LocalDateTime weekly_meeting){
+    public void AddNewCourse(String name, int numOfCredits,LocalDateTime start,LocalDateTime end){
       
-      course c=new course(name,numOfCredits,faculty);
+      course c=new course(name,numOfCredits,start,end);
     }
     public String academicStanding(student student) {
         double gpa = student.getGpa();
