@@ -12,8 +12,8 @@ public class registar  {
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
-    public void addNewStudent(String name, String contactDetails, Double gpa, ArrayList<course> courses, List<course> x) {
-      student student = new student(name, contactDetails, gpa, courses);
+    public void addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<course> x) {
+      student student = new student(name, contactDetails, courses);
       student.settokenCourses(x);
       System.out.println("New student added: " + student.getName());
   }
@@ -82,5 +82,9 @@ private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
         return studentCourses.stream()
                 .anyMatch(existingCourse -> existingCourse.hasScheduleConflict(newCourse));
     }
+        
+
+
+
 }
   
