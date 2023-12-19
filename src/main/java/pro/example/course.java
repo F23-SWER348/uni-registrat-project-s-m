@@ -6,7 +6,6 @@ import java.util.Optional;
 public class course {
     private String courseName;
     private int numOfCredits;
-    
     List<String> prerequisites;
     LocalDateTime start ;
     LocalDateTime end;
