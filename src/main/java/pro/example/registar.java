@@ -3,6 +3,7 @@ package pro.example;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -27,29 +28,41 @@ public class registar  {
 
   }
 
-  public synchronized void addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
-    faculty faculty = new faculty(name, contactDetails, courses);
+  public  faculty addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
+    faculty faculty = new faculty(name, contactDetails);
     
-    if (!hasFacultyScheduleConflict(faculty.getCourses())) {
-        // You might want to do something with the created faculty, like adding it to a list.
+    if (!hasFacultyScheduleConflict(courses)) {
+        faculty.setCourses(courses);
+        
         System.out.println("New faculty added: " + faculty.getName());
     } else {
         System.out.println("Schedule conflict! The new faculty's courses conflict with each other.");
-    }
+    }return faculty;
 }
-
+/* 
 private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
     return facultyCourses.stream().anyMatch(course -> hasScheduleConflict(facultyCourses, course));
+}
+*/
+private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
+    return facultyCourses.stream()
+            .flatMap(course1 -> facultyCourses.stream()
+                    .filter(course2 -> !course1.equals(course2))
+                    .filter(course2 -> course1.hasScheduleConflict(course2)))
+            .findFirst()
+            .isPresent();
 }
 
     public void AddNewGrade(student s, double gpa){
         s.setGpa(gpa);
     }
 
-    public void AddNewCourse(String name, int numOfCredits,LocalDateTime start,LocalDateTime end){
+    public course AddNewCourse(String name, int numOfCredits,LocalTime start,LocalTime end, String day){
       
-      course c=new course(name,numOfCredits,start,end);
+      course c=new course(name,numOfCredits,start,end,day);
+      return c;
     }
+    
     public String academicStanding(student student) {
         double gpa = student.getGpa();
 

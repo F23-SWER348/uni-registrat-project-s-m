@@ -1,5 +1,7 @@
 package pro.example;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,15 +9,16 @@ public class course {
     private String courseName;
     private int numOfCredits;
     List<String> prerequisites;
-    LocalDateTime start ;
-    LocalDateTime end;
-   
+    LocalTime start ;
+    LocalTime end;
+    String day;
 
-    public course(String name, int numOfCredits, LocalDateTime start,LocalDateTime end ) {
+    public course(String name, int numOfCredits, LocalTime start,LocalTime end , String day) {
         this.end=end;
         this.start=start;
         this.courseName = name;
         this.numOfCredits = numOfCredits;
+        this.day =day;
         
         
     }
@@ -40,25 +43,35 @@ public class course {
     public void setPrerequisites(List<String> prerequisites) {
         this.prerequisites = prerequisites;
     }
-    public LocalDateTime getStart(){
+    public LocalTime getStart(){
         return this.start;
     }
-     public void setStart(LocalDateTime start ){
+     public void setStart(LocalTime start ){
         this.start=start;
     }
-     public LocalDateTime getEnd(){
+     public LocalTime getEnd(){
         return this.end;
     }
-     public void setEnd(LocalDateTime end ){
+     public void setEnd(LocalTime end ){
         this.end=end;
     }
+       public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
     public boolean hasScheduleConflict(course otherCourse) {
-        LocalDateTime thisStart = this.getStart();
-        LocalDateTime thisEnd = this.getEnd();
-        LocalDateTime otherStart = otherCourse.getStart();
-        LocalDateTime otherEnd = otherCourse.getEnd();
+        if(otherCourse.getDay().equals(this.getDay())){
+        LocalTime thisStart = this.getStart();
+        LocalTime thisEnd = this.getEnd();
+        LocalTime otherStart = otherCourse.getStart();
+        LocalTime otherEnd = otherCourse.getEnd();
         // Check for overlap
         return !(otherEnd.isBefore(thisStart) || otherStart.isAfter(thisEnd));
     }
+    return false;
+ 
     
-}
+}}

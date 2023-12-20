@@ -6,9 +6,9 @@ public class faculty extends Userprofile {
     ArrayList<course> courses;
 
 
-public faculty(String name, String contactDetails,ArrayList<course> courses) {
+public faculty(String name, String contactDetails) {
     super(name, contactDetails);
-    this.courses=courses;
+    
 }
 
 

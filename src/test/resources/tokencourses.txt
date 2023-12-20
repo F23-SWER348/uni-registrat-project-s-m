@@ -1,0 +1,5 @@
+Mathematics,Physics
+
+History,Biology
+
+Chemistry,Physics
