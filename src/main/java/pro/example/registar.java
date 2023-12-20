@@ -9,16 +9,25 @@ import java.util.function.Predicate;
 
 public class registar  {
     String nameOfTheRegistrar;
+    
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
-    public void addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<course> x) {
-      student student = new student(name, contactDetails, courses);
+    public synchronized void addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<String> x) {
+
+      student student = new student(name, contactDetails);
       student.settokenCourses(x);
-      System.out.println("New student added: " + student.getName());
+
+      courses.forEach(c -> {
+        course c1 = c;
+        AddNewCoursesStudent(student, c1);
+    });
+
+     System.out.println("New student added: " + student.getName());
+
   }
 
-  public void addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
+  public synchronized void addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
     faculty faculty = new faculty(name, contactDetails, courses);
     
     if (!hasFacultyScheduleConflict(faculty.getCourses())) {
