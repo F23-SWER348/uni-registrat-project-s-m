@@ -10,13 +10,13 @@ public class student extends Userprofile {
  
 private Double gpa;
 ArrayList<course> courses;
-List<course> tokenCourses;
+List<String> tokenCourses;
 public student(){
     super();
 }
-public student(String name, String contactDetails,ArrayList<course> courses) {
+public student(String name, String contactDetails) {
  super(name, contactDetails);
- this.courses=courses;
+
 }
 public ArrayList<course> getCourses() {
     return courses;
@@ -30,10 +30,10 @@ public Double getGpa() {
 public void setGpa(Double gpa) {
     this.gpa = gpa;
 }
-public List<course> gettokenCourses(){
+public List<String> gettokenCourses(){
     return tokenCourses;
 }
-public void settokenCourses(List<course> t){
+public void settokenCourses(List<String> t){
     this.tokenCourses=t;
 
 }
