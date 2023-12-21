@@ -2,7 +2,6 @@ package pro.example;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +9,14 @@ import java.util.function.Predicate;
 
 public class registar  {
     String nameOfTheRegistrar;
-    
+
+
+    // add New Semester
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
+
+//add New Student
     public synchronized student addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<String> x) {
 
       student student = new student(name, contactDetails);
@@ -28,6 +31,7 @@ public class registar  {
      return student;
   }
 
+//add New Faculty
   public  faculty addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
     faculty faculty = new faculty(name, contactDetails);
     
@@ -39,11 +43,9 @@ public class registar  {
         System.out.println("Schedule conflict! The new faculty's courses conflict with each other.");
     }return faculty;
 }
-/* 
-private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
-    return facultyCourses.stream().anyMatch(course -> hasScheduleConflict(facultyCourses, course));
-}
-*/
+
+
+// check for Faculty Schedule Conflict
 private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
     return facultyCourses.stream()
             .flatMap(course1 -> facultyCourses.stream()
@@ -53,16 +55,15 @@ private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
             .isPresent();
 }
 
-    public void AddNewGrade(student s, double gpa){
-        s.setGpa(gpa);
-    }
-
+//Add New Course
     public course AddNewCourse(String name, int numOfCredits,LocalTime start,LocalTime end, String day){
       
       course c=new course(name,numOfCredits,start,end,day);
       return c;
     }
     
+
+    // report for academic Standing
     public String academicStanding(student student) {
         double gpa = student.getGpa();
 
@@ -80,9 +81,14 @@ private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
             return "Probation";
         }
     }
+
+
+    //Add New Courses Student
+    
     public void AddNewCoursesStudent(student s,ArrayList<course> courses, course newCourse) {
+        
         if (!newCourse.getPrerequisites().isEmpty()) {
-            if (s.gettokenCourses().containsAll(newCourse.getPrerequisites())) {
+            if (s.gettokenCourses().get().containsAll(newCourse.getPrerequisites().get())) {
                 if (!hasScheduleConflict(courses, newCourse)) {
                     s.getCourses().add(newCourse);
                     System.out.println("Course added to student: " + newCourse.getCourseName());
@@ -103,6 +109,8 @@ private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
         }
     }
 
+
+    //check for Schedule Conflict
     private boolean hasScheduleConflict(ArrayList<course> studentCourses, course newCourse) {
         if(studentCourses.size()==1){
             return false;

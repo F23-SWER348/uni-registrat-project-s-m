@@ -1,7 +1,6 @@
 package pro.example;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class semester {
@@ -15,6 +14,7 @@ public class semester {
         this.end = end;
         this.course=course;
     }
+
     public String getSemesterName() {
         return semesterName;
     }
