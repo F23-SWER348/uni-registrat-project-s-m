@@ -1,9 +1,8 @@
 package pro.example;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 
 public class course {
     private String courseName;
@@ -20,7 +19,6 @@ public class course {
         this.numOfCredits = numOfCredits;
         this.day =day;
         
-        
     }
 
     public String getCourseName() {
@@ -36,9 +34,9 @@ public class course {
         this.numOfCredits = numOfCredits;
     }
     
-    public List<String> getPrerequisites() {
-        return prerequisites;
-    }
+  public Optional<List<String>> getPrerequisites() {
+    return Optional.ofNullable(this.prerequisites);
+}
 
     public void setPrerequisites(List<String> prerequisites) {
         this.prerequisites = prerequisites;
@@ -62,6 +60,7 @@ public class course {
     public void setDay(String day) {
         this.day = day;
     }
+    
     public boolean hasScheduleConflict(course otherCourse) {
         if(otherCourse.getDay().equals(this.getDay())&& !otherCourse.getCourseName().equals(this.getCourseName())){
         LocalTime thisStart = this.getStart();
