@@ -63,7 +63,7 @@ public class course {
         this.day = day;
     }
     public boolean hasScheduleConflict(course otherCourse) {
-        if(otherCourse.getDay().equals(this.getDay())){
+        if(otherCourse.getDay().equals(this.getDay())&& !otherCourse.getCourseName().equals(this.getCourseName())){
         LocalTime thisStart = this.getStart();
         LocalTime thisEnd = this.getEnd();
         LocalTime otherStart = otherCourse.getStart();

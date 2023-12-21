@@ -9,7 +9,7 @@ import java.util.List;
 public class student extends Userprofile {
  
 private Double gpa;
-ArrayList<course> courses;
+ArrayList<course> courses =new ArrayList<>();
 List<String> tokenCourses;
 public student(){
     super();
@@ -31,7 +31,7 @@ public void setGpa(Double gpa) {
     this.gpa = gpa;
 }
 public List<String> gettokenCourses(){
-    return tokenCourses;
+    return this.tokenCourses;
 }
 public void settokenCourses(List<String> t){
     this.tokenCourses=t;

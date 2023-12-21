@@ -14,18 +14,18 @@ public class registar  {
     public void addNewSemester (String name , LocalDate start, LocalDate end,ArrayList<course> course){
         semester s =new semester (name , start, end,course);
     } 
-    public synchronized void addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<String> x) {
+    public synchronized student addNewStudent(String name, String contactDetails, ArrayList<course> courses, List<String> x) {
 
       student student = new student(name, contactDetails);
       student.settokenCourses(x);
 
       courses.forEach(c -> {
         course c1 = c;
-        AddNewCoursesStudent(student, c1);
+        AddNewCoursesStudent(student,courses, c1);
     });
 
      System.out.println("New student added: " + student.getName());
-
+     return student;
   }
 
   public  faculty addNewFaculty(String name, String contactDetails, ArrayList<course> courses) {
@@ -80,27 +80,34 @@ private boolean hasFacultyScheduleConflict(ArrayList<course> facultyCourses) {
             return "Probation";
         }
     }
-    public void AddNewCoursesStudent( student s, course newCourse) {
+    public void AddNewCoursesStudent(student s,ArrayList<course> courses, course newCourse) {
         if (!newCourse.getPrerequisites().isEmpty()) {
             if (s.gettokenCourses().containsAll(newCourse.getPrerequisites())) {
-                if (!hasScheduleConflict(s.getCourses(), newCourse)) {
+                if (!hasScheduleConflict(courses, newCourse)) {
                     s.getCourses().add(newCourse);
                     System.out.println("Course added to student: " + newCourse.getCourseName());
                 } else {
+                    
                     System.out.println("Schedule conflict! The new course conflicts with existing courses.");
                 }
-            } else if(newCourse.getPrerequisites().isEmpty()) {
-                if (!hasScheduleConflict(s.getCourses(), newCourse)) {
-                    s.getCourses().add(newCourse);
-                    System.out.println("Course added to student: " + newCourse.getCourseName());
-                } else {
-                    System.out.println("Schedule conflict! The new course conflicts with existing courses.");
-                }
+            } else {
+                System.out.println("Missing prerequisites! The student does not have all the prerequisites for the new course.");
+            }
+        } else {
+            if (!hasScheduleConflict(courses, newCourse)) {
+                s.getCourses().add(newCourse);
+                System.out.println("Course added to student: " + newCourse.getCourseName());
+            } else {
+                System.out.println("Schedule conflict! The new course conflicts with existing courses.");
             }
         }
     }
 
     private boolean hasScheduleConflict(ArrayList<course> studentCourses, course newCourse) {
+        if(studentCourses.size()==1){
+            return false;
+        }
+     
         return studentCourses.stream()
                 .anyMatch(existingCourse -> existingCourse.hasScheduleConflict(newCourse));
     }
