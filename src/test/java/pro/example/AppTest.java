@@ -16,14 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AppTest {
     static  ArrayList<course> courses =new ArrayList<>();
     static  registar registar = new registar();
     static  String path = "src/test/resources/course.txt";
        static  String path2 = "src/test/resources/faculty.txt";
+      List<String> list1 = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+        List<String> list3 = new ArrayList<>();
   
     @BeforeAll
     static void testApp() {
@@ -90,6 +98,7 @@ public class AppTest {
                     faculties.add(fac);
 
                     assertEquals(fac.getName(), name);
+                  //  System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
                                 
  
                 i++;  
@@ -125,6 +134,101 @@ public class AppTest {
 
                     assertEquals(fac.getName(), name);
                                 
+                 System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
+                i++;  
+             } 
+ 
+         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    void tokenCourses(){
+         String filePath1 = "src/test/resources/tokencourses.txt";
+
+        // Read the file and store each line in a list
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath1))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Create three lists, each containing two subjects
+        
+
+        // Split each line and distribute subjects to the three lists
+          int j=0;
+        for (String line : lines) {
+            String[] subjects = line.split(",");
+          
+            if (subjects.length == 2) {
+                if(j==0){
+                list1.add(subjects[0]);
+                list1.add(subjects[1]);
+                }
+                 else if(j==1){
+                list2.add(subjects[0]);
+                list2.add(subjects[1]);
+                }
+                else if(j==2){
+                list3.add(subjects[0]);
+                list3.add(subjects[1]);
+                }
+                j++;
+                 // If you want to keep the original line with both subjects
+            } else {
+                System.out.println("Invalid line format: " + line);
+            }
+        }
+      assertEquals(list1.get(0), "Mathematics");
+      assertEquals(list2.get(0), "History");
+      assertEquals(list3.get(0), "Chemistry");
+        // Display the resulting lists
+        System.out.println("List 1: " + list1);
+        System.out.println("List 2: " + list2);
+        System.out.println("List 3: " + list3);
+    }
+    
+    @Test
+        void testStudentConflict(){
+             String filePath = "src/test/resources/student.txt";
+
+        ArrayList<student> stu = new ArrayList<>();
+        ArrayList<course> a =new ArrayList<>();
+
+        a.add(courses.get(3));
+        System.out.println(courses.get(3).getPrerequisites());
+       a.add(courses.get(2));
+       a.add(courses.get(0));
+
+           tokenCourses();
+      
+    
+  
+       // System.out.println(a);
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                int i=0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure all required fields are present
+                    String name = parts[0].trim();
+                    String contactDetails = parts[1].trim();
+
+                    student s = registar.addNewStudent(name, contactDetails, a,list1);
+                   
+                    stu.add(s);
+
+                    assertEquals(s.getName(), name);
+                  //  System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
+                            System.out.println(stu.get(i).getCourses().get(0).getCourseName());   
+                                 System.out.println(stu.get(i).gettokenCourses());  
  
                 i++;  
              } 
@@ -134,5 +238,139 @@ public class AppTest {
             e.printStackTrace();
         }
     }
+    @Test
+        void testStudentConflict1(){
+             String filePath = "src/test/resources/student.txt";
+
+        ArrayList<student> stu = new ArrayList<>();
+        ArrayList<course> a =new ArrayList<>();
+
+        a.add(courses.get(3));
+        System.out.println(courses.get(3).getPrerequisites());
+       a.add(courses.get(2));
+       
+       
+           tokenCourses();
+      
+    
+  
+       // System.out.println(a);
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                int i=0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure all required fields are present
+                    String name = parts[0].trim();
+                    String contactDetails = parts[1].trim();
+
+                    student s = registar.addNewStudent(name, contactDetails, a,list1);
+                   
+                    stu.add(s);
+
+                    assertEquals(s.getName(), name);
+                  //  System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
+                            System.out.println(stu.get(i).getCourses().get(0).getCourseName());   
+                                 System.out.println(stu.get(i).gettokenCourses());  
+ 
+                i++;  
+             } 
+ 
+         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+        void testStudentConflict2(){
+             String filePath = "src/test/resources/student.txt";
+
+        ArrayList<student> stu = new ArrayList<>();
+        ArrayList<course> a =new ArrayList<>();
+
+        a.add(courses.get(3));
+        System.out.println(courses.get(3).getPrerequisites());
+       a.add(courses.get(1));
+      
+       
+           tokenCourses();
+      
+    
+  
+       // System.out.println(a);
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                int i=0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure all required fields are present
+                    String name = parts[0].trim();
+                    String contactDetails = parts[1].trim();
+
+                    student s = registar.addNewStudent(name, contactDetails, a,list3);
+                   
+                    stu.add(s);
+
+                    assertEquals(s.getName(), name);
+                  //  System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
+              //              System.out.println(stu.get(i).getCourses().get(0).getCourseName());   
+                                 System.out.println(stu.get(i).gettokenCourses());  
+ 
+                i++;  
+             } 
+ 
+         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+      @Test
+        void testStudentConflict3(){
+             String filePath = "src/test/resources/student.txt";
+
+        ArrayList<student> stu = new ArrayList<>();
+        ArrayList<course> a =new ArrayList<>();
+
+        a.add(courses.get(4));
+        System.out.println(courses.get(3).getPrerequisites());
+       a.add(courses.get(2));
+       
+       
+           tokenCourses();
+      
+    
+  
+       // System.out.println(a);
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                int i=0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure all required fields are present
+                    String name = parts[0].trim();
+                    String contactDetails = parts[1].trim();
+
+                    student s = registar.addNewStudent(name, contactDetails, a,list2);
+                   
+                    stu.add(s);
+
+                    assertEquals(s.getName(), name);
+                  //  System.out.println(faculties.get(i).getCourses().get(0).getCourseName());
+                          //  System.out.println(stu.get(i).getCourses().get(0).getCourseName());   
+                                 System.out.println(stu.get(i).gettokenCourses());  
+ 
+                i++;  
+             } 
+ 
+         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
         }
