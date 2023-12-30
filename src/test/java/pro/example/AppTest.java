@@ -413,10 +413,20 @@ public class AppTest {
  
          }
          grade();
+    
+
         stu.get(0).calculateGpa(selectedValues); 
-      System.out.println(stu.get(0).getGpa());  
+
+          System.out.println();
+        System.out.println("Student Form ");
    
-         System.out.println(registar.academicStanding(stu.get(0)));
+        ///////////////print the transcript for the student/////
+         System.out.println("Student Name : "+stu.get(0).getName()+"  ");
+         System.out.println("Course Name       Grade      Credit Hours");
+         System.out.println(a.get(0).getCourseName()+"            "+selectedValues.get(0)+"        "+a.get(0).getNumOfCredits()+"\n"+a.get(1).getCourseName()+"            "+selectedValues.get(1)
+         +"        "+a.get(1).getNumOfCredits()  );
+         System.out.println("GPA : "+stu.get(0).getGpa()); 
+         System.out.println("Message : "+registar.academicStanding(stu.get(0)));
         } catch (IOException e) {
             e.printStackTrace();
         }}
@@ -487,9 +497,16 @@ public class AppTest {
          }
          grade2();
         stu.get(0).calculateGpa(selectedValues); 
-      System.out.println(stu.get(0).getGpa());  
-   
-         System.out.println(registar.academicStanding(stu.get(0)));
+        System.out.println();
+        System.out.println("Student Form ");
+         ///////////////print the transcript for the student/////
+         System.out.println("Student Name : "+stu.get(0).getName()+"  ");
+         System.out.println("Course Name       Grade      Credit Hours");
+         System.out.println(a.get(0).getCourseName()+"            "+selectedValues.get(0)+"        "+a.get(0).getNumOfCredits()+"\n"+a.get(1).getCourseName()+"            "+selectedValues.get(1)
+         +"        "+a.get(1).getNumOfCredits()  );
+         System.out.println("GPA : "+stu.get(0).getGpa()); 
+         System.out.println("Message : "+registar.academicStanding(stu.get(0)));
+       
         } catch (IOException e) {
             e.printStackTrace();
         }
